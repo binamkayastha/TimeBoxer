@@ -2,7 +2,6 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Shapes 1.0
 import Material 0.3
 import Material.Extras 0.1
 //import QtQuick.Controls.Material 2.1
@@ -35,8 +34,6 @@ ApplicationWindow {
             }
         }
 
-
-        }
 
         ActionButton {
             anchors {
@@ -119,15 +116,21 @@ ApplicationWindow {
             }
         }
 
-        // Only used for debuging:
-        //        Component.onCompleted: listModel.append (
-        //                                   {
-        //                                hh_start: "0",
-        //                                mm_start: "0",
-        //                                ss_start: "10",
-        //                                name_string: "test",
-        //                                   })
-        //    }
+        //         Only used for debuging:
+//        Component.onCompleted: listModel.append ([
+//                                 {
+//                                     hh_start: "0",
+//                                     mm_start: "1",
+//                                     ss_start: "30",
+//                                     name_string: "test",
+//                                 },
+//                                 {
+//                                     hh_start: "0",
+//                                     mm_start: "0",
+//                                     ss_start: "10",
+//                                     name_string: "test",
+//                                 },
+//                             ])
     }
-
 }
+
