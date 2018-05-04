@@ -2,7 +2,6 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Shapes 1.0
 import Material 0.3
 import Material.Extras 0.1
 //import QtQuick.Controls.Material 2.1
@@ -35,65 +34,6 @@ ApplicationWindow {
             }
         }
 
-
-        Shape {
-            width: 100
-            height: 100
-            anchors.centerIn: parent
-
-            Rectangle {
-                z: -1
-                anchors.centerIn: parent
-                property int shrink_value: 10
-                width: parent.width-shrink_value; height: parent.height-shrink_value;
-                radius: width*0.5
-                color: "#0285CD"
-            }
-
-            ShapePath {
-                id: timeArc
-                property int radius: 50
-                // Radius values going to be equivalent to center
-                property int centerx: timeArc.radius
-                property int centery: timeArc.radius
-                property int percentage: 0
-                property double raw_degrees: percentage * (360/100)
-                // Degrees need to be shifted by 90 degrees so rotation starts at top instead of right
-                property double degrees: raw_degrees -90
-                property double radians: degrees*(Math.PI/180)
-                strokeColor: "#3B4CA9"
-                fillColor: "#3B4CA9"
-                dashPattern: [ 1, 4 ]
-                startX: timeArc.centerx; startY: 0
-                PathLine { x: timeArc.centerx; y: timeArc.centery}
-                PathLine {
-                    id: pathLine
-                    x: -(timeArc.radius*Math.cos(timeArc.radians)) + timeArc.radius;
-                    y: timeArc.radius*Math.sin(timeArc.radians) + timeArc.radius;
-                }
-                PathArc {
-                    x: timeArc.startX; y: timeArc.startY
-                    radiusX: timeArc.radius; radiusY: timeArc.radius
-                    direction: PathArc.Clockwise
-                    // Important to modulate degrees variable to make sure useLargeArc works properly
-                    // Use raw_degrees, as degrees is used to change orientation
-                    useLargeArc: (timeArc.raw_degrees % 360) < 180 ? false : true
-                }
-            }
-            Component.onCompleted:  {
-                console.log(pathLine.x + ":" + pathLine.y)
-                ticker.start()
-            }
-            Timer {
-                id: ticker;
-                interval: 1;
-                repeat: true;
-                onTriggered: {
-                    timeArc.percentage += 1
-                }
-            }
-
-        }
 
         ActionButton {
             anchors {
@@ -176,15 +116,21 @@ ApplicationWindow {
             }
         }
 
-        // Only used for debuging:
-        //        Component.onCompleted: listModel.append (
-        //                                   {
-        //                                hh_start: "0",
-        //                                mm_start: "0",
-        //                                ss_start: "10",
-        //                                name_string: "test",
-        //                                   })
-        //    }
+        //         Only used for debuging:
+        Component.onCompleted: listModel.append ([
+                                 {
+                                     hh_start: "0",
+                                     mm_start: "0",
+                                     ss_start: "10",
+                                     name_string: "test",
+                                 },
+                                 {
+                                     hh_start: "0",
+                                     mm_start: "0",
+                                     ss_start: "10",
+                                     name_string: "test",
+                                 },
+                             ])
     }
-
 }
+

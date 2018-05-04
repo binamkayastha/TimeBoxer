@@ -7,7 +7,7 @@ Item {
     id: timebox
     anchors.left: parent.left
     anchors.right: parent.right
-    height: 70
+    height: 50
 
     signal removed()
 
@@ -16,7 +16,20 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
+        height: parent.height
         spacing: 5
+
+        Rectangle {
+            Layout.alignment: Qt.AlignLeft
+            width: dp(50)
+            height: parent.height
+            CountdownCircle {
+                id: countdownCircle
+                Layout.alignment: Qt.AlignLeft
+                height: parent.height
+                width: height
+            }
+        }
 
         HMSTimeInput {
             id: hmsTimeInput
