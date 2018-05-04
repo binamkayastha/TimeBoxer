@@ -117,20 +117,20 @@ ApplicationWindow {
         }
 
         //         Only used for debuging:
-        Component.onCompleted: listModel.append ([
-                                 {
-                                     hh_start: "0",
-                                     mm_start: "1",
-                                     ss_start: "30",
-                                     name_string: "test",
-                                 },
-                                 {
-                                     hh_start: "0",
-                                     mm_start: "0",
-                                     ss_start: "10",
-                                     name_string: "test",
-                                 },
-                             ])
+//        Component.onCompleted: listModel.append ([
+//                                 {
+//                                     hh_start: "0",
+//                                     mm_start: "1",
+//                                     ss_start: "30",
+//                                     name_string: "test",
+//                                 },
+//                                 {
+//                                     hh_start: "0",
+//                                     mm_start: "0",
+//                                     ss_start: "10",
+//                                     name_string: "test",
+//                                 },
+//                             ])
     }
 }
 

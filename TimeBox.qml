@@ -19,17 +19,15 @@ Item {
         height: parent.height
         spacing: 5
 
-    CountdownCircle {
-        id: countdownCircle
-        Layout.alignment: Qt.AlignLeft
-        Layout.leftMargin: 10
-        height: parent.height -5
-        width: height
-    }
+        CountdownCircle {
+            id: countdownCircle
+            Layout.leftMargin: 10
+            height: parent.height -5
+            width: height
+        }
 
         HMSTimeInput {
             id: hmsTimeInput
-            Layout.alignment: Qt.AlignLeft
             width: dp(50) // col-3
             height: parent.height
             initial_hh: hh_start
@@ -40,7 +38,7 @@ Item {
 
         Rectangle {
             id: name
-            Layout.alignment: Qt.AlignLeft
+            Layout.fillWidth: true
             color: "transparent"
             width: (parent.width/12)*4 // col-3
             height: parent.height
@@ -53,7 +51,6 @@ Item {
 
         Button {
             id: start
-            anchors.right: stop.left
             text: "Start"
             // By clicking on the button in the text box we return the index in the ListView
             onClicked: {
@@ -62,14 +59,12 @@ Item {
         }
         Button {
             id: stop
-            anchors.right: remove.left
             Layout.rightMargin: 0
             text: "Stop"
             onClicked: hmsTimeInput.ticker.stop()
         }
         Button {
             id: remove
-            Layout.alignment: Qt.AlignRight
             text: "Delete"
             onClicked: {
                 removed()
