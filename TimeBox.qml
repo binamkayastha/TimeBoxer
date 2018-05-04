@@ -19,26 +19,23 @@ Item {
         height: parent.height
         spacing: 5
 
-        Rectangle {
-            Layout.alignment: Qt.AlignLeft
-            width: dp(50)
-            height: parent.height
-            CountdownCircle {
-                id: countdownCircle
-                Layout.alignment: Qt.AlignLeft
-                height: parent.height
-                width: height
-            }
-        }
+    CountdownCircle {
+        id: countdownCircle
+        Layout.alignment: Qt.AlignLeft
+        Layout.leftMargin: 10
+        height: parent.height -5
+        width: height
+    }
 
         HMSTimeInput {
             id: hmsTimeInput
             Layout.alignment: Qt.AlignLeft
             width: dp(50) // col-3
             height: parent.height
-            hh: hh_start
-            mm: mm_start
-            ss: ss_start
+            initial_hh: hh_start
+            initial_mm: mm_start
+            initial_ss: ss_start
+            countdownCircle: countdownCircle
         }
 
         Rectangle {

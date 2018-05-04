@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Shapes 1.0
 
 Item {
+    property alias percentage: timeArc.percentage
     Shape {
         id: shape
         height: parent.height
@@ -49,17 +50,17 @@ Item {
                 useLargeArc: (timeArc.raw_degrees % 360) < 180 ? false : true
             }
         }
-                    Component.onCompleted:  {
-                        ticker.start()
-                    }
-                    Timer {
-                        id: ticker;
-                        interval: 1;
-                        repeat: true;
-                        onTriggered: {
-                            timeArc.percentage += 1
-                        }
-                    }
+//                    Component.onCompleted:  {
+//                        ticker.start()
+//                    }
+//                    Timer {
+//                        id: ticker;
+//                        interval: 1;
+//                        repeat: true;
+//                        onTriggered: {
+//                            timeArc.percentage += 1
+//                        }
+//                    }
     }
 
 }
