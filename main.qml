@@ -1,6 +1,10 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import QtQuick.Window 2.2
+import QtQuick.Layouts 1.1
+import QtQuick.Shapes 1.0
 import Material 0.3
+import Material.Extras 0.1
 //import QtQuick.Controls.Material 2.1
 
 ApplicationWindow {
@@ -9,80 +13,121 @@ ApplicationWindow {
     height: 480
     title: qsTr("Timeboxer")
 
-//    Material.theme: Material.Dark
-//    Material.accent: Material.Purple
+    theme {
+        primaryColor: "#3E4FB1"
+        accentColor: "red"
+        tabHighlightColor: "white"
+    }
 
 
-    Row {
-        id: topbar
-        height: 50
-        spacing: 5
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+    initialPage: Page {
+        title: "TimeBoxer"
 
-        Rectangle {
-            width: (parent.width/2) // col-6
-            height: parent.height
+        ListView {
+            id: boxlist
+            anchors.fill: parent
 
-            TextEdit {
-                id: nameinput
-                anchors.fill: parent
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-
-                property string placeholderText: "Enter text here..."
-
-                Text {
-                    anchors.fill: parent
-                    verticalAlignment: parent.verticalAlignment
-                    horizontalAlignment: parent.horizontalAlignment
-                    text: nameinput.placeholderText
-                    color: "#aaa"
-                    visible: !nameinput.text
-                }
-                // Key navigation settings have to be here, because textedit captures input first
-                KeyNavigation.priority: KeyNavigation.BeforeItem
-                KeyNavigation.tab: hh_input
+            model: ListModel {
+                id: listModel
+            }
+            delegate: TimeBox {
+                onRemoved: listModel.remove(index)
             }
         }
-        // Each TimeInput is width col-1
-        TobbarTimeInput {id: hh_input; KeyNavigation.tab: mm_input; KeyNavigation.backtab: nameinput;}
-        TobbarTimeInput {id: mm_input; KeyNavigation.tab: ss_input; KeyNavigation.backtab: hh_input;}
-        TobbarTimeInput {id: ss_input; KeyNavigation.tab: add_timebox; KeyNavigation.backtab: mm_input;}
 
-        // col-3
-        Button {
-            id: add_timebox
-            text: qsTr("Add Timebox")
-            width: (parent.width / 12)*3
-            height: parent.height
 
-            onClicked: {
+        }
+
+        ActionButton {
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+                margins: dp(32)
+            }
+
+            action: Action {
+                id: addContent
+                text: "&Add"
+                shortcut: "A"
+                onTriggered: {
+                    addTimeboxPrompt.open()
+                }
+            }
+            iconName: "content/add"
+        }
+
+        Dialog {
+            id: addTimeboxPrompt
+            width: dp(300)
+            text: "Create a new Timebox!"
+            hasActions: true
+            positiveButtonEnabled: true
+            negativeButtonText: "Cancel"
+            positiveButtonText: "Add"
+            TextField {
+                id: nameInput
+                width: parent.width
+                placeholderText: "Name of Timebox"
+            }
+            Row {
+                width: parent.width
+                TextField {
+                    id: hh_input;
+                    width: parent.width/3
+                    placeholderText: "hh"
+                }
+                Text {
+                    text: ":"
+                }
+                TextField {
+                    id: mm_input;
+                    width: parent.width/3
+                    placeholderText: "mm"
+                }
+                Text {
+                    text: ":"
+                }
+                TextField {
+                    id: ss_input;
+                    width: parent.width/3
+                    placeholderText: "ss"
+                }
+
+            }
+
+            onAccepted: {
+                // Add an item
                 listModel.append(
                             {
                                 hh_start: hh_input.text,
                                 mm_start: mm_input.text,
                                 ss_start: ss_input.text,
-                                name_string: nameinput.text,
+                                name_string: nameInput.text,
                             })
+                // Clear text
+                nameInput.text = ""
+                hh_input.text = ""
+                mm_input.text = ""
+                ss_input.text = ""
             }
-            KeyNavigation.backtab: ss_input
+            onRejected: {
+                // Clear text
+                nameInput.text = ""
+                hh_input.text = ""
+                mm_input.text = ""
+                ss_input.text = ""
+            }
         }
 
+        // Only used for debuging:
+        //        Component.onCompleted: listModel.append (
+        //                                   {
+        //                                hh_start: "0",
+        //                                mm_start: "0",
+        //                                ss_start: "10",
+        //                                name_string: "test",
+        //                                   })
+        //    }
     }
 
-    ListView {
-        id: boxlist
-        anchors.top: topbar.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        model: ListModel {
-            id: listModel
-        }
-        delegate: TimeBox {}
-    }
 }
-
